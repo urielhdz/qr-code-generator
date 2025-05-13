@@ -6,33 +6,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Code Generator</title>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    label {
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    input[type="url"] {
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      width: 300px;
+      font-size: 1em;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #qrCanvas {
+      margin-top: 20px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .container {
+      text-align: center;
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+  </style>
 </head>
 
 <body>
-  <h1>QR Code Generator</h1>
-  <form id="urlForm">
-    <label for="urlInput">Enter URL:</label>
-    <input type="url" id="urlInput" name="url" required>
-    <button type="submit">Generate QR Code</button>
-  </form>
+  <div class="container">
+    <h1>QR Code Generator</h1>
+    <form id="urlForm">
+      <label for="urlInput">Enter URL:</label>
+      <input type="url" id="urlInput" name="url" placeholder="https://example.com" required>
+      <button type="submit">Generate QR Code</button>
+    </form>
 
-  <canvas id="qrCanvas"></canvas>
+    <canvas id="qrCanvas"></canvas>
+  </div>
 
   <script>
     // Get form and canvas elements
     const form = document.getElementById('urlForm');
     const urlInput = document.getElementById('urlInput');
     const qrCanvas = document.getElementById('qrCanvas');
+
     // Handle form submission
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
       event.preventDefault(); // Prevent the form from refreshing the page
       const url = urlInput.value.trim();
       if (url) {
         // Generate the QR code and draw it on the canvas with increased size
         QRCode.toCanvas(qrCanvas, url, {
-          width: 300 * 1.5, // 1.5x bigger width
-          height: 300 * 1.5 // 1.5x bigger height
-        }, function(error) {
+          width: 300 * 1.5,
+          height: 300 * 1.5
+        }, function (error) {
           if (error) {
             console.error(error);
             alert('Error generating QR Code');
